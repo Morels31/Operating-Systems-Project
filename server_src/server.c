@@ -25,8 +25,8 @@ int main(int argc, char **argv){
 	if((msgQueue = msgget(IPC_PRIVATE, 0600))==-1) fatalError("msgget() failed");
 	if((sem = semget(IPC_PRIVATE, TOT_SEMAPHORES_N, IPC_CREAT | 0600))==-1) fatalError("semget() failed");
 
-	if(mkdir(RESOURCES_FOLDER, 0600)==-1) if(errno!=EEXIST) fatalError("mkdir() failed");
-	if(mkdir(LOG_FOLDER, 0600)==-1) if(errno!=EEXIST) fatalError("mkdir() failed");
+	if(mkdir(RESOURCES_FOLDER, 0700)==-1) if(errno!=EEXIST) fatalError("mkdir() failed");
+	if(mkdir(LOG_FOLDER, 0700)==-1) if(errno!=EEXIST) fatalError("mkdir() failed");
 
 	/* tries to access the RECOVERY_DATA_FILENAME, if it exists means that the last shutdown was forced and data has to be recovered */
 	if(!access(RECOVERY_DATA_FILENAME, F_OK)) mainDynArr = recoverMainDynArr();
