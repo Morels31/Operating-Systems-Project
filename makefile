@@ -20,7 +20,7 @@ COMMON_SRCS := utility.c
 
 
 LINKER_OPT := -fPIE
-COMPILER_OPT := -fPIE
+COMPILER_OPT := -fPIE -O3
 
 
 
