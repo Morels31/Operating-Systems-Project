@@ -791,7 +791,7 @@ unsigned long countFileLines(char *filename){
  *    'len' = the length of 'str'
  *
  *    returns 0 if the write was successfull, or
- *    returns 1 if the connection was closed.
+ *    returns 1 if the connection has been closed or timed out.
  */
 
 int writeToSocket(char *str, size_t len, int sockFd){
@@ -804,7 +804,7 @@ int writeToSocket(char *str, size_t len, int sockFd){
 	
 	while(toWrite>0){
 		while((writed = send(sockFd, p, toWrite, MSG_NOSIGNAL))<0){
-			if(errno==EPIPE) return 1;
+			if(errno==EPIPE || errno==EAGAIN || EWOULDBLOCK) return 1; //return 1 if connection has been closed or timed out
 			else if(errno!=EINTR) error("send() failed");
 		}
 		toWrite -= writed;
@@ -823,7 +823,7 @@ int writeToSocket(char *str, size_t len, int sockFd){
  *
  *    'dest' = pointer to a char buffer of size BUFF_SIZE
  *    
- *    returns 0 if the client closed the connection (or the data was too long), or
+ *    returns 0 if the connection has been closed, timed out, or the data was too long). or
  *    returns the number of readed characters.
  */
 
@@ -831,7 +831,10 @@ size_t readFromSocket(char *dest, int sockFd){
 	if(!dest) error("NULL argument");
 	ssize_t readed;
 	
-	while((readed = read(sockFd, dest, BUFF_SIZE-1))<0) if(errno!=EINTR) error("recv() failed");
+	while((readed = read(sockFd, dest, BUFF_SIZE-1))<0){
+		if(errno==EAGAIN || EWOULDBLOCK) return 0;					//return 0 if timed out
+		if(errno!=EINTR) error("read() failed");
+	}
 	if(readed>=BUFF_SIZE-1) return 0;
 	dest[readed] = '\0';
 	return readed;
