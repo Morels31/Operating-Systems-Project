@@ -823,7 +823,7 @@ int writeToSocket(char *str, size_t len, int sockFd){
  *
  *    'dest' = pointer to a char buffer of size BUFF_SIZE
  *    
- *    returns 0 if the connection has been closed, timed out, or the data was too long). or
+ *    returns 0 if the connection has been closed, timed out, or the data was too long. or
  *    returns the number of readed characters.
  */
 
