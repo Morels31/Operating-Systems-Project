@@ -13,10 +13,13 @@ int main(int argc, char **argv){
 
 
 	char *hostname = NULL;
-	char *ip = DEFAULT_SERVER_IP;
+	char *ip = NULL;
 	int port = DEFAULT_SERVER_PORT;
 	parseCmdLine(argc, argv, &ip, &hostname, &port);
-
+	if(!ip){
+		printNow("The settings have not been selected,\nso the default ones will be used.\n(execute with -h for help)\n\n");
+		ip = DEFAULT_SERVER_IP;
+	}
 
 	int sock;
 	if((sock = socket(AF_INET, SOCK_STREAM, 0))==-1) error("socket() failed");
