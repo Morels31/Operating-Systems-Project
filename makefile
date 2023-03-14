@@ -19,8 +19,8 @@ COMMON_HEADERS := common_headers.h
 COMMON_SRCS := utility.c
 
 
-LINKER_OPT := -fPIE
-COMPILER_OPT := -fPIE -O3
+LINKER_OPT := -fPIE -std=gnu11
+COMPILER_OPT := -fPIE -std=gnu11 -O3
 
 
 
