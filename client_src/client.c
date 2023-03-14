@@ -155,20 +155,20 @@ int main(int argc, char **argv){
 
 		switch(respBuff[0]){
 			case SUCCESS_RESP:
-				printf("Request successfully executed.\n");
+				printf("\n\n\nRequest successfully executed.\n");
 				if(len>1){
 					if(checkRecordString(respBuff+1, MAIN_TYPE)) error("Received invalid record string"); 
 					p = respBuff+1;
 					while(*p!='\0' && *p!=KEY_VALUE_SEPARATOR) p++;
-					if(*p!='\0'){
+					if(*p!='\0' && *(p+1)!='\0'){
 						*p++='\0';
-						printf("Name: %s\nNumbers: %s\n", respBuff+1, p);
+						printf("\nName: %s\nNumbers: %s\n", respBuff+1, p);
 					}
-					else printf("There aren't numbers associated with the name '%s'\n", data);
+					else printf("\nThere aren't numbers associated with the name '%s'\n", data);
 				}
 				break;
 			case FAIL_RESP: 
-				printf("Request failed.\n");
+				printf("\n\n\nRequest failed.\n");
 				break;
 			case INV_REQ_RESP:
 				error("The client did an invalid request.\n");
