@@ -598,7 +598,8 @@ char *readUsernameString(char *optionalDest, size_t *optionalTotChars){
 /*
  *  Hashes the string pointed by 'str' using the sha512crypt algorithm.
  *  checks it's validity, and then saves it in an newly allocated area, or,
- *  if 'optionalDest' is not NULL, in the area pointed by it.)
+ *  if 'optionalDest' is not NULL, in the area pointed by it.
+ *  (This function is not thread safe)
  *
  *    'str' = string to hash.
  *    'optionalDest' = a pointer to an optional already allocated char buffer, long at least HASH_SIZE+1.
@@ -607,11 +608,9 @@ char *readUsernameString(char *optionalDest, size_t *optionalTotChars){
  */
 
 char *hash(char *str, char *optionalDest){
-	struct crypt_data data;
-	memset(&data, 0, sizeof(struct crypt_data));
-	if(!crypt_r(str, "$6$", &data)) error("crypt_r() failed");
-	if(data.output[0]=='*') error("crypt_r() failed");
-	char *p = data.output;
+	char *tmp;
+	if(!(tmp = crypt(str, "$6$"))) error("crypt() failed");
+	char *p = tmp;
 	for(int i=0; i<3; i++){
 		while(*p!='$' && *p!='\0') p++;
 		if(*p=='\0') error("generated invalid hash");
@@ -627,7 +626,7 @@ char *hash(char *str, char *optionalDest){
 	}
 
 	strcpy(resultStr, p);
-	memset(&data, 0, sizeof(struct crypt_data));
+	crypt("", "$6$");												//"cleaning" the crypt() static buffer
 	return resultStr;
 }
 
