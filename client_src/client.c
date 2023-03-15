@@ -160,7 +160,7 @@ int main(int argc, char **argv){
 					if(checkRecordString(respBuff+1, MAIN_TYPE)) error("Received invalid record string"); 
 					p = respBuff+1;
 					while(*p!='\0' && *p!=KEY_VALUE_SEPARATOR) p++;
-					if(*p!='\0' && *(p+1)!='\0'){
+					if(*p!='\0' && *(p+1)!='\0'){ 
 						*p++='\0';
 						printf("\nName: %s\nNumbers: %s\n", respBuff+1, p);
 					}
