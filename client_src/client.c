@@ -194,7 +194,7 @@ int main(int argc, char **argv){
  *    'argc' = the main argc variable.
  *    'argv' = the main argv variable.
  *    'ip' = pointer to where will be saved the eventual ip.
- *    'hostname' = pointer to where will be saved the evntual hostname.
+ *    'hostname' = pointer to where will be saved the eventual hostname.
  *    'port' = a pointer where will be saved the evetual port.
  */
 
