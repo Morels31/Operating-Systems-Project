@@ -195,7 +195,7 @@ int main(int argc, char **argv){
  *    'argv' = the main argv variable.
  *    'ip' = pointer to where will be saved the eventual ip.
  *    'hostname' = pointer to where will be saved the eventual hostname.
- *    'port' = a pointer where will be saved the evetual port.
+ *    'port' = a pointer where will be saved the eventual port.
  */
 
 void parseCmdLine(int argc, char **argv, char **ip, char **hostname, int *port){
